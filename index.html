@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="author" content="Yolanda Cruz Girona">
+		<title>Puzzle</title>
+		<script src="javascript/script.js"></script>
+		<link rel="stylesheet" href="css/estilo.css">
+	</head>
+
+  <body>
+		<header>
+      <a id="logo" href="index.html"><img src="img/logo.png" alt="Logo"></a>
+      <div>
+  			<h1>Puzzle</h1>
+        <h2>Objetivo: Elige una imagen y monta un puzzle con ella<h2>
+      </div>
+		</header>
+    <section>
+      <h2>Imagen</h2>
+      <canvas width="480" height="480" id="cv01"></canvas>
+      <footer>
+        <button onclick="cuadrado();">Cuadrado</button>
+        <button onclick="rotar45deg();">Rotar</button>
+        <button onclick="imagen();">Imagen</button>
+        <button onclick="copiar();">Copiar</button>
+      </footer>
+    </section>
+    <section>
+      <h2>Puzzle</h2>
+      <canvas width="480" height="480" id="cv02"></canvas>
+      <footer>
+        <button onclick="aColor('r');">Rojo</button>
+        <button onclick="aColor('g');">Verde</button>
+        <button onclick="aColor('b');">Azul</button>
+      </footer>
+    </section>
+    <footer>
+      © 2018 Yolanda Cruz Girona | Ingeniería Multimedia | <a href="acerca.html" >Acerca de</a>
+    </footer>
+  </body>
+</html>
