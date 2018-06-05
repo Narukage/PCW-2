@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="css/estilo.css">
 	</head>
 
-  <body>
+  <body onload="init();">
 		<header>
       <a id="logo" href="index.html"><img src="img/logo.png" alt="Logo"></a>
       <div>
@@ -20,22 +20,20 @@
 		</header>
     <section>
       <h2>Imagen</h2>
-      <canvas width="480" height="480" id="cv01"></canvas>
-      <footer>
-        <button onclick="cuadrado();">Cuadrado</button>
-        <button onclick="rotar45deg();">Rotar</button>
-        <button onclick="imagen();">Imagen</button>
-        <button onclick="copiar();">Copiar</button>
-      </footer>
+			<form id="form1">
+				<input id="uploadImage" type="file" name="myPhoto" onchange="loadImage();" accept="image/*"/>
+			</form>
+			<br>
+      <canvas width="480" height="480" id="cv01" onclick="cambiarImagen();">
+
+			</canvas>
+			<br>
+			<button onclick="empezarJuego()">Empezar juego</button>
     </section>
     <section>
       <h2>Puzzle</h2>
-      <canvas width="480" height="480" id="cv02"></canvas>
-      <footer>
-        <button onclick="aColor('r');">Rojo</button>
-        <button onclick="aColor('g');">Verde</button>
-        <button onclick="aColor('b');">Azul</button>
-      </footer>
+      <canvas width="480" height="480" id="cv02" onmousemove="mouse_move(event);" onclick="mouse_click(event);"></canvas>
+
     </section>
     <footer>
       © 2018 Yolanda Cruz Girona | Ingeniería Multimedia | <a href="acerca.html" >Acerca de</a>

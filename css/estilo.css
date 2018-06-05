@@ -1,8 +1,12 @@
+body{
+	text-align: center;
+}
+
 canvas{
 	border: 1px solid #234;
 }
-section{
+/*section{
 	display: inline-block;
 	float: left;
 	margin-left: .3em;
-}
+}*/
