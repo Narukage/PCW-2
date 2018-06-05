@@ -44,9 +44,30 @@ function empezarJuego(){
     dibujarCuadricula();
 }
 
-function cambiarImagen(){
+//Subir foto al canvas y cambiarla
+function cambiarFoto() {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
 
-}
+      oFReader.onload = function (oFREvent) {
+			var url=oFREvent.target.result;
+			var url2=url.split(";");
+			var url3=url2[0].split("/");
+			console.log(url3[1]);
+			if(url3[1]=="jpg" || url3[1]=="png" || url3[1]=="jpeg" || url3[1]=="bmp" || url3[1]=="gif"){
+
+        let cv = document.getElementById('cv01');
+      	let ctx = cv.getContext('2d');
+      	let img = new Image();
+
+      	img.onload = function(){
+      		ctx.drawImage(img, 0, 0, cv.width, cv.height);
+      	};
+      	img.src = url;
+			}
+        };
+ }
+
 
 //Hay que cambiar valores aqui dependiendo de la dificultad elegida
 function dibujarCuadricula(){
