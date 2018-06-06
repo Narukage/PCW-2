@@ -221,9 +221,10 @@ function mouse_click(e){
 	let cv = e.target,
 		x = e.offsetX,
 		y = e.offsetY,
-		dim = cv.width / 4,
+		dim = cv.width / 6,
+    dimy = cv.height / 4,
 		d = document.querySelector('#botDif').value,
-		fila = Math.floor( y / dim),
+		fila = Math.floor( y / dimy),
 		columna = Math.floor( x / dim);
 
 		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
@@ -240,7 +241,7 @@ function mouse_click(e){
 	ctx.beginPath();
 	ctx.strokeStyle = '#a00';
 	ctx.lineWidth = 4;
-	ctx.strokeRect(columna * dim, fila * dim, dim, dim)
+	ctx.strokeRect(columna * dim, fila * dimy, dim, dimy);
 }
 
 //Limpiar canvas
