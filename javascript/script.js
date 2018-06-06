@@ -185,8 +185,8 @@ function mouse_click(e){
 		y = e.offsetY,
 		dim = cv.width / 4,
 		d = document.querySelector('#botDif').value,
-		fila = Math.floor( y / dif[d][1]),
-		columna = Math.floor( x / dif[d][0]);
+		fila = Math.floor( y / dim),
+		columna = Math.floor( x / dim);
 
 		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
 			return;
