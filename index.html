@@ -39,10 +39,9 @@
 
 			</fieldset>
         <article>
-          <button id="botEmp" onclick="empezarJuego()" id="myBtn">Empezar juego</button>
           <p>Color de las lineas</p>
           <input id="botCol" type="color" name="favcolor" value="#ff0000">
-          <p>grosor de las lineas</p>
+          <p>Grosor de las lineas</p>
           <input id="grosor" value=2 type="numer">
           <p>Dificultad</p>
          <select id="botDif">
@@ -51,17 +50,22 @@
             <option value="2">Dificil</option>
           </select>
         </article>
-        <br>
-        <article>
-          <button id="botFin" disabled>Finalizar</button>
-          <button id="botAyu" disabled>Ayuda</button>
-        </article>
+				<br>
+				<button id="botEmp" onclick="empezarJuego()" id="myBtn">Empezar juego</button>
+				<br>
     </section>
     <section>
       <h2>Puzzle</h2>
       <div id="number"></div>
-      <canvas width="480" height="480" id="cv02" onmousemove="mouse_move(event);" onclick="mouse_click(event);"></canvas>
+      <canvas width="480" height="480" id="cv02" onmousemove="mouse_move(event);" onclick="mouse_click(event);">
 
+			</canvas>
+			<br>
+			<article>
+				<button id="botFin" disabled onclick="finalizar();">Finalizar</button>
+				<button id="botAyu" disabled>Ayuda</button>
+			</article>
+			<br>
     </section>
     <footer>
       © 2018 Yolanda Cruz Girona | Ingeniería Multimedia | <a href="acerca.html" >Acerca de</a>

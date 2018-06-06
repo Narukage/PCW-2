@@ -2,6 +2,9 @@ var imgcargada = false;
 var dif = [[6,4],[9,6],[12,8]];
 var n = 0;
 
+var arrayPiezas = new Array();
+var img = new Image();
+
 function init(){
   let cv = document.getElementById('cv01');
 	let ctx = cv.getContext('2d');
@@ -25,7 +28,6 @@ function init(){
 			fr = new FileReader();
 
 		fr.onload = function(){
-			let img = new Image();
 			img.onload = function(){
 				let ctx = cv01.getContext('2d');
 				ctx.drawImage(img, 0, 0, cv01.width, cv01.height);
@@ -56,10 +58,21 @@ function empezarJuego(){
         }
     }
   }else{
+    let d = document.querySelector('#botDif').value;
+    let cont = 0;
     //zona imagen
-    copiarCanvas();
     //zona puzzle
+    //array de piezas
+    let tamanio = dif[d][0]*dif[d][1];
+    for(var i=0; i<tamanio; i++){
+        arrayPiezas[cont] = cont;
+        cont++;
+    }
+    desordenar(arrayPiezas);
+    console.log(arrayPiezas);
+    copiarCanvas(arrayPiezas);
     dibujarCuadricula();
+    //desordenar baraja
     //boton empezar
     tiempo();
     deshabilitaBotones();
@@ -67,17 +80,47 @@ function empezarJuego(){
   }
 }
 
-function copiarCanvas(){
-	let cv1 = document.querySelector('#cv01'),
-	ctx1 = cv1.getContext('2d');
-	let cv2 = document.querySelector('#cv02'),
-	ctx2 = cv2.getContext('2d');
+function desordenar(array){
+  var currentIndex = array.length, temporaryValue, randomIndex ;
 
-	//let img = new Image();
-	//img.crossOrigin = "Anonymous";
-	let imgData = ctx1.getImageData(0,0,cv1.width, cv1.height);
-	ctx2.putImageData(imgData,0,0);
+  // Mientras haya elementos que barajar
+  while (0 !== currentIndex) {
 
+    // Cojo el elemento siguiente
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // Y lo cambio con el elemento actual
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+/*function finalizar(){
+  let t = n;
+
+  t.style.display = "none";
+}*/
+
+function copiarCanvas(array){
+  let d = document.querySelector('#botDif').value;
+  let c1 = document.getElementById("cv01"),
+      ctx1 = c1.getContext('2d'),
+      c2 = document.getElementById("cv02"),
+      ctx2 = c2.getContext('2d'),
+      imagen;
+
+      let cont = 0;
+      for(let i=0; i<dif[d][1]; i++){
+        for(let j=0; j<dif[d][0]; j++){
+          imagen = ctx1.getImageData((array[cont]/dif[d][0])*ctx1.canvas.clientHeight/dif[d][0], (array[cont]%dif[d][1])*ctx1.canvas.clientWidth/dif[d][1], ctx1.canvas.clientHeight/dif[d][0],  ctx1.canvas.clientWidth/dif[d][1]);
+          ctx2.putImageData(imagen, j*ctx2.canvas.clientHeight/dif[d][0], i*ctx2.canvas.clientWidth/dif[d][1]);
+          cont++;
+        }
+      }
 }
 
 function tiempo(){
@@ -106,7 +149,6 @@ function cambiarFoto() {
 
         let cv = document.getElementById('cv01');
       	let ctx = cv.getContext('2d');
-      	let img = new Image();
         img.setAttribute('crossOrigin', '');
 
       	img.onload = function(){
@@ -126,27 +168,6 @@ function cambiarFoto() {
 	document.querySelector('#botFin').disabled=false;
 	document.querySelector('#botAyu').disabled=false;
 }
-
-
-//Hay que cambiar valores aqui dependiendo de la dificultad elegida
-/*function dibujarCuadricula(){
-	let cv = document.getElementById('cv02');
-	let ctx = cv.getContext('2d');
-	let dim = cv.width / 3;
-
-	ctx.beginPath();
-	ctx.lineWidth = 2;
-	ctx.strokeStyle = '#00a';
-	for(let i=1; i<3; i++){
-		//lineas verticales
-		ctx.moveTo(i * dim, 0);
-		ctx.lineTo(i * dim, cv.height);
-		//lineas horizontales
-		ctx.moveTo(0, i * dim);
-		ctx.lineTo(cv.width, i * dim);
-	}
-	ctx.stroke();
-}*/
 
 function dibujarCuadricula(){
 	let cv = document.getElementById('cv02');
@@ -182,8 +203,9 @@ function mouse_move(e){
 	let cv = e.target,
 		x = e.offsetX,
 		y = e.offsetY,
-		dim = cv.width / 3,
-		fila = Math.floor( y / dim),
+		dim = cv.width / 6,
+    dimy = cv.height / 4,
+		fila = Math.floor( y / dimy),
 		columna = Math.floor( x / dim);
 
 	console.log(" Posicion: ${x} - ${y}");
@@ -191,39 +213,14 @@ function mouse_move(e){
 	console.log('fila:'+fila+' columna:'+columna);
 }
 
-//Para seleccionar trozos de la cuadricula
-/*function mouse_click(e){
-	let cv = e.target,
-		x = e.offsetX,
-		y = e.offsetY,
-		dim = cv.width / 3,
-		fila = Math.floor( y / dim),
-		columna = Math.floor( x / dim);
-
-		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
-			return;
-		}
-
-	console.log(" Posicion: ${x} - ${y}");
-	console.log(' Posicion: '+ x +' - '+ y);
-	console.log('fila:'+fila+' columna:'+columna);
-
-	cv.width = cv.width;
-	dibujarCuadricula();
-	let ctx = cv.getContext('2d');
-	ctx.beginPath();
-	ctx.strokeStyle = '#a00';
-	ctx.lineWidth = 4;
-	ctx.strokeRect(columna * dim, fila * dim, dim, dim)
-}*/
 
 function mouse_click(e){
 	let cv = e.target,
+		d = document.querySelector('#botDif').value,
 		x = e.offsetX,
 		y = e.offsetY,
-		dim = cv.width / 6,
-    dimy = cv.height / 4,
-		d = document.querySelector('#botDif').value,
+		dim = cv.width / dif[d][0],
+    	dimy = cv.height / dif[d][1],
 		fila = Math.floor( y / dimy),
 		columna = Math.floor( x / dim);
 
@@ -236,12 +233,14 @@ function mouse_click(e){
 	console.log('fila:'+fila+' columna:'+columna);
 
 	cv.width = cv.width;
+  copiarCanvas(arrayPiezas);
 	dibujarCuadricula();
 	let ctx = cv.getContext('2d');
 	ctx.beginPath();
 	ctx.strokeStyle = '#a00';
 	ctx.lineWidth = 4;
 	ctx.strokeRect(columna * dim, fila * dimy, dim, dimy);
+
 }
 
 //Limpiar canvas
