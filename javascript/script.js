@@ -14,37 +14,48 @@ function init(){
 	img.src = 'drop-here.png';
 
 //DRAG&DROP
-if(!document.querySelector('#botEmp').disabled){ // si empieza el juego no se puede cambiar NO VA
-	console.log(document.querySelector('#botEmp').disabled);
-	 let cv01 = document.querySelector('#cv01');
-		cv01.ondragover = function(e) {
-			e.stopPropagation();
-			e.preventDefault(); // return false;
-		};
-		cv01.ondrop = function(e) {
-			e.preventDefault(); // return false;
-			let fichero = e.dataTransfer.files[0];
-				fr = new FileReader();
+  let cv01 = document.querySelector('#cv01');
+	cv01.ondragover = function(e) {
+		e.stopPropagation();
+		e.preventDefault(); // return false;
+	};
+	cv01.ondrop = function(e) {
+		e.preventDefault(); // return false;
+		let fichero = e.dataTransfer.files[0];
+			fr = new FileReader();
 
-			fr.onload = function(){
-				let img = new Image();
-				img.onload = function(){
-					let ctx = cv01.getContext('2d');
-					ctx.drawImage(img, 0, 0, cv01.width, cv01.height);
-				};
-				img.src = fr.result;
+		fr.onload = function(){
+			let img = new Image();
+			img.onload = function(){
+				let ctx = cv01.getContext('2d');
+				ctx.drawImage(img, 0, 0, cv01.width, cv01.height);
 			};
-			fr.readAsDataURL(fichero);
-		}
-	
+			img.src = fr.result;
+		};
+		fr.readAsDataURL(fichero);
 	}
 }
 
 function empezarJuego(){
   if(imgcargada==false){
     console.log("No has seleccionado ninguna imagen");
-  }
-   
+
+    var modal = document.getElementById('myModal2'),
+    btn = document.getElementById("myBtn"),
+    span = document.getElementsByClassName("close")[0];
+
+    modal.style.display = "block";
+
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+  }else{
     //zona imagen
     copiarCanvas();
     //zona puzzle
@@ -52,20 +63,8 @@ function empezarJuego(){
     //boton empezar
     tiempo();
     deshabilitaBotones();
-}
-
-function cambiarImagen(){
-
-}
-function deshabilitaBotones(){
-	//he intenado poerlo como clase pero solo me coge el primero
-	document.querySelector('#botEmp').disabled=true;
-	document.querySelector('#botCol').disabled=true;
-	document.querySelector('#botDif').disabled=true;
-	document.querySelector('#botFin').disabled=false;
-	document.querySelector('#botAyu').disabled=false;
-
-	
+    //mierdas varias joder
+  }
 }
 
 function copiarCanvas(){
@@ -73,7 +72,7 @@ function copiarCanvas(){
 	ctx1 = cv1.getContext('2d');
 	let cv2 = document.querySelector('#cv02'),
 	ctx2 = cv2.getContext('2d');
-	
+
 	//let img = new Image();
 	//img.crossOrigin = "Anonymous";
 	let imgData = ctx1.getImageData(0,0,cv1.width, cv1.height);
@@ -81,16 +80,56 @@ function copiarCanvas(){
 
 }
 
-
 function tiempo(){
 window.setInterval(function (){
   document.getElementById("number").innerHTML = n;
   n++;
 },1000);
 }
+
+//Cambia la foto del canvas haciendo click sobre el
+function cambiarFotoclick(){
+  document.getElementById("uploadImage").click();
+}
+
+//Subir foto al canvas y cambiarla
+function cambiarFoto() {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+
+      oFReader.onload = function (oFREvent) {
+			var url=oFREvent.target.result;
+			var url2=url.split(";");
+			var url3=url2[0].split("/");
+			console.log(url3[1]);
+			if(url3[1]=="jpg" || url3[1]=="png" || url3[1]=="jpeg" || url3[1]=="bmp" || url3[1]=="gif"){
+
+        let cv = document.getElementById('cv01');
+      	let ctx = cv.getContext('2d');
+      	let img = new Image();
+        img.setAttribute('crossOrigin', '');
+
+      	img.onload = function(){
+      		ctx.drawImage(img, 0, 0, cv.width, cv.height);
+      	};
+      	img.src = url;
+			}
+        };
+  imgcargada=true;
+ }
+
+ function deshabilitaBotones(){
+	//he intenado poerlo como clase pero solo me coge el primero
+	document.querySelector('#botEmp').disabled=true;
+	document.querySelector('#botCol').disabled=true;
+	document.querySelector('#botDif').disabled=true;
+	document.querySelector('#botFin').disabled=false;
+	document.querySelector('#botAyu').disabled=false;
+}
+
+
 //Hay que cambiar valores aqui dependiendo de la dificultad elegida
-/*
-function dibujarCuadricula(){
+/*function dibujarCuadricula(){
 	let cv = document.getElementById('cv02');
 	let ctx = cv.getContext('2d');
 	let dim = cv.width / 3;
@@ -124,13 +163,13 @@ function dibujarCuadricula(){
 
 	//lineas verticales
 	for(let i=1; i<dif[d][0]; i++){
-	
+
 		ctx.moveTo(i * dimx, 0);
 		ctx.lineTo(i * dimx, cv.height);
 	}
 	//lineas horizontales
 	for(let i=1; i<dif[d][1]; i++){
-		
+
 		ctx.moveTo(0, i * dimy);
 		ctx.lineTo(cv.width, i * dimy);
 	}
@@ -143,24 +182,23 @@ function mouse_move(e){
 	let cv = e.target,
 		x = e.offsetX,
 		y = e.offsetY,
-	    d = document.querySelector('#botDif').value,
-		fila = cv.width / dif[d][0],
-		dimy = cv.height / dif[d][1];
+		dim = cv.width / 3,
+		fila = Math.floor( y / dim),
+		columna = Math.floor( x / dim);
 
 	console.log(" Posicion: ${x} - ${y}");
 	console.log(' Posicion: '+ x +' - '+ y);
-	console.log('fila:'+fila+' columna:'+dimy);
+	console.log('fila:'+fila+' columna:'+columna);
 }
-/*
+
 //Para seleccionar trozos de la cuadricula
-function mouse_click(e){
+/*function mouse_click(e){
 	let cv = e.target,
 		x = e.offsetX,
 		y = e.offsetY,
-		d = document.querySelector('#botDif').value,
-		fila = cv.width / dif[d][0],
-		dim = cv.width /  dif[d][0],
-		columna = cv.height / dif[d][1];
+		dim = cv.width / 3,
+		fila = Math.floor( y / dim),
+		columna = Math.floor( x / dim);
 
 		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
 			return;
@@ -175,10 +213,10 @@ function mouse_click(e){
 	let ctx = cv.getContext('2d');
 	ctx.beginPath();
 	ctx.strokeStyle = '#a00';
-	ctx.lineWidth = 5;
+	ctx.lineWidth = 4;
 	ctx.strokeRect(columna * dim, fila * dim, dim, dim)
-}
-*/
+}*/
+
 function mouse_click(e){
 	let cv = e.target,
 		x = e.offsetX,

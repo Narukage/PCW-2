@@ -21,15 +21,25 @@
     <section>
       <h2>Imagen</h2>
 			<form id="form1">
-				<input id="uploadImage" type="file" name="myPhoto" onchange="loadImage();" accept="image/*"/>
+				<input id="uploadImage" type="file" name="myPhoto" onchange="cambiarFoto();" accept="image/*"/>
 			</form>
 			<br>
-      <canvas width="480" height="480" id="cv01" onclick="cambiarImagen();">
+      <canvas width="480" height="480" id="cv01" onclick="cambiarFotoclick();">
 
 			</canvas>
 			<br>
+			<fieldset id="myModal2" class="modal">
+
+			  <!-- Modal content -->
+			  <div class="modal-content" id="modal-content">
+			    <span class="close">&times;</span>
+			    <h2>¡Error!</h2>
+					<p>No has seleccionado ninguna imagen</p>
+			  </div>
+
+			</fieldset>
         <article>
-          <button id="botEmp" onclick="empezarJuego()">Empezar juego</button>
+          <button id="botEmp" onclick="empezarJuego()" id="myBtn">Empezar juego</button>
           <p>Color de las lineas</p>
           <input id="botCol" type="color" name="favcolor" value="#ff0000">
           <p>grosor de las lineas</p>
