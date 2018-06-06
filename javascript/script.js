@@ -41,33 +41,30 @@ function empezarJuego(){
     //Inicializa contador
     //Carga imagen en el canvas de Puzzle
     //Mierdas varias
+    copiarCanvas();
     dibujarCuadricula();
 }
 
-//Subir foto al canvas y cambiarla
-function cambiarFoto() {
-      var oFReader = new FileReader();
-      oFReader.readAsDataURL(document.getElementById("uploadImage").files[0]);
+function cambiarImagen(){
 
-      oFReader.onload = function (oFREvent) {
-			var url=oFREvent.target.result;
-			var url2=url.split(";");
-			var url3=url2[0].split("/");
-			console.log(url3[1]);
-			if(url3[1]=="jpg" || url3[1]=="png" || url3[1]=="jpeg" || url3[1]=="bmp" || url3[1]=="gif"){
+}
 
-        let cv = document.getElementById('cv01');
-      	let ctx = cv.getContext('2d');
-      	let img = new Image();
+function copiarCanvas(){
+	let cv1 = document.querySelector('#cv01'),
+	ctx1 = cv1.getContext('2d');
+	let cv2 = document.querySelector('#cv02'),
+	ctx2 = cv2.getContext('2d');
+	//console.log(cv1)
+	//console.log(ctx1)
+	//console.log(cv2)
+	//console.log(ctx2)
+	
+	//let img = new Image();
+	//img.crossOrigin = "Anonymous";
+	let imgData = ctx1.getImageData(0,0,cv1.width, cv1.height);
+	ctx2.putImageData(imgData,0,0);
 
-      	img.onload = function(){
-      		ctx.drawImage(img, 0, 0, cv.width, cv.height);
-      	};
-      	img.src = url;
-			}
-        };
- }
-
+}
 
 //Hay que cambiar valores aqui dependiendo de la dificultad elegida
 function dibujarCuadricula(){
