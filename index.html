@@ -21,19 +21,44 @@
     <section>
       <h2>Imagen</h2>
 			<form id="form1">
-				<input id="uploadImage" type="file" name="myPhoto" onchange="cambiarFoto()" accept="image/*"/>
+				<input id="uploadImage" type="file" name="myPhoto" onchange="cambiarFoto();" accept="image/*"/>
 			</form>
 			<br>
-      <canvas width="480" height="480" id="cv01" onclick="cambiarFoto();">
+      <canvas width="480" height="480" id="cv01" onclick="cambiarFotoclick();">
 
 			</canvas>
 			<br>
-			<button onclick="empezarJuego()">Empezar juego</button>
+			<fieldset id="myModal2" class="modal">
+
+			</fieldset>
+        <article>
+          <p>Color de las lineas</p>
+          <input id="botCol" type="color" name="favcolor" value="#ff0000">
+          <p>Grosor de las lineas</p>
+          <input id="grosor" value=2 type="numer">
+          <p>Dificultad</p>
+         <select id="botDif">
+            <option value="0">Facil</option>
+            <option value="1">Intermedia</option>
+            <option value="2">Dificil</option>
+          </select>
+        </article>
+				<br>
+				<button id="botEmp" onclick="empezarJuego()" id="myBtn">Empezar juego</button>
+				<br>
     </section>
     <section>
       <h2>Puzzle</h2>
-      <canvas width="480" height="480" id="cv02" onmousemove="mouse_move(event);" onclick="mouse_click(event);"></canvas>
+      <div id="number"></div>
+      <canvas width="480" height="480" id="cv02" onmousemove="mouse_move(event);" onclick="mouse_click(event);">
 
+			</canvas>
+			<br>
+			<article>
+				<button id="botFin" disabled onclick="finalizar();">Finalizar</button>
+				<button id="botAyu" disabled>Ayuda</button>
+			</article>
+			<br>
     </section>
     <footer>
       © 2018 Yolanda Cruz Girona | Ingeniería Multimedia | <a href="acerca.html" >Acerca de</a>
