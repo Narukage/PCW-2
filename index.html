@@ -33,35 +33,46 @@
 			</fieldset>
         <article>
           <p>Color de las lineas</p>
-          <input id="botCol" type="color" name="favcolor" value="#ff0000">
+          <input id="botCol" type="color" name="favcolor" value="#5858FA" disabled onclick="previsualizar(event);">
           <p>Grosor de las lineas</p>
-          <input id="grosor" value=2 type="numer">
+          <input id="grosor" value=2 type="numer" disabled>
           <p>Dificultad</p>
-         <select id="botDif">
+         <select id="botDif" disabled onclick="previsualizar(event);">
             <option value="0">Facil</option>
             <option value="1">Intermedia</option>
             <option value="2">Dificil</option>
           </select>
         </article>
 				<br>
-				<button id="botEmp" onclick="empezarJuego()" id="myBtn">Empezar juego</button>
+				<button id="botEmp" onclick="empezarJuego();" id="myBtn" disabled>Empezar juego</button>
 				<br>
     </section>
     <section>
       <h2>Puzzle</h2>
+			<section id="marcador">
       <div id="number"></div>
+			</section>
       <canvas width="480" height="480" id="cv02" onmousemove="mouse_move(event);" onclick="mouse_click(event);">
 
 			</canvas>
+
 			<br>
 			<article>
 				<button id="botFin" disabled onclick="finalizar();">Finalizar</button>
-				<button id="botAyu" disabled>Ayuda</button>
+				<button id="botAyu" disabled onclick="aiuda();">Ayuda</button>
 			</article>
 			<br>
     </section>
     <footer>
-      © 2018 Yolanda Cruz Girona | Ingeniería Multimedia | <a href="acerca.html" >Acerca de</a>
+			<nav>
+				<ul>
+					<li>Puzzle&copy;</li>
+					<li>+34 603859625</li>
+					<li>España</li>
+					<li><time datetime="2018-06-08">2018</time></li>
+					<li><a href="acerca.html">Acerca de</a></li>
+				</ul>
+			</nav>
     </footer>
   </body>
 </html>
