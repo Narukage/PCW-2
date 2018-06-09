@@ -28,6 +28,8 @@ function init(){
 
   deshabilitaBotones();
   document.querySelector('#uploadImage').disabled=false;
+  document.querySelector("#botFin").disabled=true;
+  document.querySelector("#botAyu").disabled=true;
 
   ctx2.clearRect(0, 0, cv2.width, cv2.height);
 
