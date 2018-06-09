@@ -24,6 +24,8 @@ function init(){
   let img = new Image();
   let d = document.querySelector('#botDif').value;
 
+  malcolocadas = dif[d][0]*dif[d][1];
+
   deshabilitaBotones();
   document.querySelector('#uploadImage').disabled=false;
 
@@ -34,8 +36,8 @@ function init(){
 	};
 
 	img.src = 'drop-here.png';
-if(empezado){
 
+if(empezado){
 	// EVENTOS DE RATÓN
 		let cv02 = document.querySelector('#cv02');
 		cv02.onmousemove = function(e){
@@ -62,17 +64,12 @@ if(empezado){
 			copiarCanvas();
 			dibujarCuadricula();
 
-			//Esto es el "hover"
-			ctx2.strokeStyle = '#5858FA';
-			ctx2.lineWidth = 4;
-			ctx2.strokeRect(col * dimx, fil * dimy, dimx, dimy);
-
 			//la primera vez que pinchamos (CREOAJAJAJ)
-			if(ef1!=null){
+			/*if(ef1!=null){
 				ctx2.strokeStyle = '#5858FA';
 				ctx2.lineWidth = 4;
 				ctx2.strokeRect(ec1 * dimx, ef1 * dimy, dimx, dimy);
-			}
+			}*/
 
 			fc = {'fil':fil, 'col':col};
 			cv02.setAttribute('data-FC', JSON.stringify(fc));
@@ -98,12 +95,25 @@ if(empezado){
 			let x = e.offsetX,
 			y = e.offsetY;
 		}
-	}
+  }
+}
+
+function destacar(e){
+  console.log("entro");
+  let cv = document.getElementById("cv01");
+  ctx = cv.getContext('2d');
+
+	ctx.strokeStyle = 'green';
+	ctx.lineWidth = 6;
+
+  ctx.strokeRect(0,0, cv.width, cv.height);
+  dragdrop();
 }
 
 function dragdrop(){
+  console.log("me llaman");
+  console.log(empezado);
 	if(!empezado){
-    console.log("entro");
 		//DRAG&DROP
 	  let cv01 = document.querySelector('#cv01');
 		cv01.ondragover = function(e) {
@@ -144,7 +154,7 @@ function empezarJuego(){
     deshabilitaBotones();
     tiempo();
     deshabilitaBotones();
-
+    empezado=true;
 }
 
 function desordenar(array){
@@ -190,11 +200,14 @@ function finalizar(){
   span.onclick = function() {
       modal.style.display = "none";
       init();
+      limpiar();
+      document.getElementById("myModal2").innerHTML = '';
   }
 
   window.onclick = function(event) {
       if (event.target == modal) {
           modal.style.display = "none";
+          limpiar();
       }
   }
   movimientos=0;
@@ -257,7 +270,6 @@ function cambiarFotoclick(){
 
 function arrays(){
   let tamanio = dif[document.querySelector('#botDif').value][0]*dif[document.querySelector('#botDif').value][1];
-    empezado=true;
     //array de piezas
     let cont = 0;
     for(i=0; i<tamanio; i++){
@@ -296,6 +308,7 @@ function cambiarFoto() {
         };
   imgcargada=true;
   document.querySelector('#botEmp').disabled=false;
+  dragdrop();
  }
 
  function habilitarBotones(){
@@ -356,95 +369,117 @@ function dibujarCuadricula(){
 
 //Calcular posicion del raton dentro del copiar
 function mouse_move(e){
-	return;//?
-	let cv = e.target,
-		x = e.offsetX,
-		y = e.offsetY,
-		dim = cv.width / dif[d][0],
-    	dimy = cv.height / dif[d][1],
-		fila = Math.floor( y / dimy),
-		columna = Math.floor( x / dim);
-		 c2 = document.getElementById("cv02"),
-     	 ctx2 = c2.getContext('2d');
+  if(empezado){
+    console.log("entro empezado");
+    let d = document.querySelector('#botDif').value,
+      cv = e.target,
+  		x = e.offsetX,
+  		y = e.offsetY,
+  		dim = cv.width / dif[d][0],
+      	dimy = cv.height / dif[d][1],
+  		fila = Math.floor( y / dimy),
+  		columna = Math.floor( x / dim);
+  		 c2 = document.getElementById("cv02"),
+       	 ctx2 = c2.getContext('2d');
 
-		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
-			return;
-		}
+  		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
+  			return;
+  		}
 
-	console.log(" Posicion: ${x} - ${y}");
-	console.log(' Posicion: '+ x +' - '+ y);
-	console.log('fila:'+fila+' columna:'+columna);
+      copiarCanvas();
+      dibujarCuadricula();
+
+      //Esto es el "hover"
+      ctx2.strokeStyle = '#5858FA';
+      ctx2.lineWidth = 4;
+      ctx2.strokeRect(columna * dim, fila * dimy, dim, dimy);
+
+      /*if(ef1==null){
+        //Esto es el "hover"
+        ctx2.strokeStyle = 'green';
+        ctx2.lineWidth = 4;
+        ctx2.strokeRect(ec1 * dim, ef1 * dimy, dim, dimy);
+      }*/
+
+  	console.log(" Posicion: ${x} - ${y}");
+  	console.log(' Posicion: '+ x +' - '+ y);
+  	console.log('fila:'+fila+' columna:'+columna);
+  }
 }
 
 
 function mouse_click(e){
-	let cv = e.target,
-		d = document.querySelector('#botDif').value,
-		x = e.offsetX,
-		y = e.offsetY,
-		dim = cv.width / dif[d][0],
-    	dimy = cv.height / dif[d][1],
-		fila = Math.floor( y / dimy),
-		columna = Math.floor( x / dim),
-		 c2 = document.getElementById("cv02"),
-     	 ctx2 = c2.getContext('2d');
+  if(empezado){
+    console.log(empezado);
+  	let cv = e.target,
+  		d = document.querySelector('#botDif').value,
+  		x = e.offsetX,
+  		y = e.offsetY,
+  		dim = cv.width / dif[d][0],
+      	dimy = cv.height / dif[d][1],
+  		fila = Math.floor( y / dimy),
+  		columna = Math.floor( x / dim),
+  		 c2 = document.getElementById("cv02"),
+       	 ctx2 = c2.getContext('2d');
 
-		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
-			return;
-		}
+  		if(x<1 || x>cv.width-1 || y<1 || y>cv.height-1){
+  			return;
+  		}
 
-	console.log(" Posicion: ${x} - ${y}");
-	console.log(' Posicion: '+ x +' - '+ y);
-	console.log('fila:'+fila+' columna:'+columna);
+  	console.log(" Posicion: ${x} - ${y}");
+  	console.log(' Posicion: '+ x +' - '+ y);
+  	console.log('fila:'+fila+' columna:'+columna);
 
-	cv.width = cv.width;
-  copiarCanvas(arrayPiezas);
-	dibujarCuadricula();
-	let ctx = cv.getContext('2d');
-	ctx.beginPath();
-	ctx.strokeStyle = 'green';
-	ctx.lineWidth = 6;
-	ctx.strokeRect(columna * dim, fila * dimy, dim, dimy);
-	var variable;
+  	cv.width = cv.width;
+    copiarCanvas(arrayPiezas);
+  	dibujarCuadricula();
+  	let ctx = cv.getContext('2d');
+  	ctx.beginPath();
+  	ctx.strokeStyle = 'green';
+  	ctx.lineWidth = 6;
+  	ctx.strokeRect(columna * dim, fila * dimy, dim, dimy);
+  	var variable;
 
-	//Primero tenemos que conseguir el primer puntero
-	if(ef1==null){
-		ef1 = fila;
-		ec1 = columna;
-	}
-	else// una vez tenemos el puntero
-	{
-		//conseguimos el segundo puntero
-		ef2 = fila;
-		ec2 = columna;
-        let tamanyoX = Math.floor(ctx2.canvas.clientWidth/dif[d][0]);
-        let tamanyoY = Math.floor(ctx2.canvas.clientHeight/dif[d][1]);
-         //intercambiamos las piezas:
-		//cogemos primer  trozo
-			imagen = ctx2.getImageData(ec1*tamanyoX, ef1*tamanyoY, tamanyoX,  tamanyoY);
-		//cogemos segundo trozo
-			imagen2 = ctx2.getImageData(ec2*tamanyoX, ef2*tamanyoY, tamanyoX,  tamanyoY);
+  	//Primero tenemos que conseguir el primer puntero
+  	if(ef1==null){
+  		ef1 = fila;
+  		ec1 = columna;
+  	}
+  	else// una vez tenemos el puntero
+  	{
+  		//conseguimos el segundo puntero
+  		ef2 = fila;
+  		ec2 = columna;
+          let tamanyoX = Math.floor(ctx2.canvas.clientWidth/dif[d][0]);
+          let tamanyoY = Math.floor(ctx2.canvas.clientHeight/dif[d][1]);
+           //intercambiamos las piezas:
+  		//cogemos primer  trozo
+  			imagen = ctx2.getImageData(ec1*tamanyoX, ef1*tamanyoY, tamanyoX,  tamanyoY);
+  		//cogemos segundo trozo
+  			imagen2 = ctx2.getImageData(ec2*tamanyoX, ef2*tamanyoY, tamanyoX,  tamanyoY);
 
-			//insertamos imagenes
-				variable=arrayPiezas[(dif[d][1]*ec1)+ef1];
-				arrayPiezas[(dif[d][1]*ec1)+ef1]=arrayPiezas[(dif[d][1]*ec2)+ef2];
-				arrayPiezas[(dif[d][1]*ec2)+ef2]=variable;
+  			//insertamos imagenes
+  				variable=arrayPiezas[(dif[d][1]*ec1)+ef1];
+  				arrayPiezas[(dif[d][1]*ec1)+ef1]=arrayPiezas[(dif[d][1]*ec2)+ef2];
+  				arrayPiezas[(dif[d][1]*ec2)+ef2]=variable;
 
-			//esto sirver para que quede mejor, se queda el cambio ya hecho
-			//de otra manera, queda un poco raro
-				ctx2.putImageData(imagen, ec2*tamanyoX, ef2*tamanyoY);
-				ctx2.putImageData(imagen2, ec1*tamanyoX, ef1*tamanyoY);
+  			//esto sirver para que quede mejor, se queda el cambio ya hecho
+  			//de otra manera, queda un poco raro
+  				ctx2.putImageData(imagen, ec2*tamanyoX, ef2*tamanyoY);
+  				ctx2.putImageData(imagen2, ec1*tamanyoX, ef1*tamanyoY);
 
-		//borramos coordenadas
-		ef1 = null;
-		ec1 = null;
-		ef2 = null;
-		ec2 = null;
-		variable = null;
-	}
-	if(comprobar()==0)
-		finalizar();
+  		//borramos coordenadas
+  		ef1 = null;
+  		ec1 = null;
+  		ef2 = null;
+  		ec2 = null;
+  		variable = null;
+  	}
+  	if(comprobar()==0)
+  		finalizar();
+  }
 }
+
 function comprobar(){
 	let d = document.querySelector('#botDif').value;
       let html = '';
@@ -511,9 +546,19 @@ function aiuda(){
 }
 //Limpiar canvas
 function limpiar(e){
-let cv2 = document.getElementById("cv02");
-let ctx2 = cv2.getContext('2d');
+  let cv2 = document.getElementById("cv02");
+  let ctx2 = cv2.getContext('2d');
 
-ctx2.clearRect(0, 0, cv2.width, cv2.height);
+  document.getElementById("piezasmal").innerHTML = '';
+  document.getElementById("movimientos").innerHTML = '';
+  document.getElementById("number").innerHTML = '';
+
+  console.log("he eliminado cosas?");
+
+  n = 0;
+
+  ctx2.clearRect(0, 0, cv2.width, cv2.height);
+
+  return false;
 
 }
