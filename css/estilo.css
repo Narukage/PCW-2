@@ -1,15 +1,193 @@
-body{
-	text-align: center;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+*{
+	font-family: 'Roboto', sans-serif;
 }
 
-canvas{
-	border: 1px solid #234;
+@media (min-width: 481px) and (max-width: 720px){
+	section{
+	width: 70%;
+	margin:1em auto;
+	font-size: 0.8em;
+	display:flex;
+	flex-direction:column;
+	}
+
+	canvas{
+		border: 1px solid #234;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	footer>nav>ul>li{
+				text-align: center;
+				display: block;
+				padding: 1em 1.5em;
+				color: #99cc99;
+			}
+
 }
-/*section{
-	display: inline-block;
-	float: left;
-	margin-left: .3em;
-}*/
+
+@media (max-width: 481px) {
+	canvas{
+		border: 1px solid #234;
+		margin: 0 auto;
+		width: 100%;
+	}
+
+	footer>nav>ul>li{
+				text-align: center;
+				display: block;
+				padding: 1em 1.5em;
+				color: #99cc99;
+			}
+
+}
+
+	p{
+		font-size: 1.3em;
+	}
+
+	body{
+		text-align: center;
+		min-width: 320px;
+		margin: 0 auto;
+	}
+
+	canvas{
+		border: 1px solid #234;
+		margin: 0 auto;
+	}
+
+	#documentacion{
+		text-align: left;
+		margin: 1em 1em;
+		font-size: 1em;
+	}
+
+	#acerca{
+		text-align: left;
+		margin: 1em 1em;
+		font-size: 0.8em;
+	}
+
+	footer{
+	 position: fixed;
+   left: 0;
+	 bottom: 0;
+   width: 100%;
+	}
+
+	footer>nav{
+		background-color: #343434;
+	}
+		footer>nav>ul{
+			margin:0px;
+			padding:0px;
+			display:flex;
+			flex-wrap:nowrap;
+		}
+			footer>nav>ul>li{
+				text-align: center;
+				display: block;
+				padding: .2em 3.35em;
+				color: #99cc99;
+			}
+			footer>nav>ul>li:nth-of-type(2n){
+				border: 0vw 1vw solid #234;
+				width:0px;
+			}
+
+	footer>nav>ul>li>a{
+		display: block;
+		text-decoration: underline;
+		color: #99cc99;
+		font-style: bold;
+		transition:all 0.3s;
+
+	}
+
+	footer>nav>ul>li>a:hover{
+		color:white;
+	}
+
+	body>header{
+	  background-color: #343434;
+		display: flex;
+		flex-direction: column;
+		padding: 1em;
+		width: 100%;
+		overflow: hidden;
+		color: white;
+	}
+
+	header>a>img{
+		width: 10%;
+	}
+
+	article{
+		width:70%;
+		margin: 1em auto;
+		padding: .5em;
+		border:.1em solid #234;
+		border-radius:5px;
+
+		display:flex;
+		flex-direction:column;
+	}
+
+	section{
+	width: 80%;
+	margin:1em auto;
+	font-size: 0.8em;
+	display:flex;
+	flex-direction:column;
+	}
+
+	button:hover{
+		background-color: #99cc99;
+
+	}
+
+	button{
+		display: block;
+	    margin: .5em auto;
+	    height: auto;
+	    border: 2px solid #99cc99;
+	    border-radius: 5px;
+	    font-weight: 600;
+	    font-size: 1.3em;
+	}
+
+	input:hover{
+		background-color: #99cc99;
+
+	}
+
+	input{
+			display: block;
+	    margin: .5em auto;
+	    height: auto;
+			padding: .5em;
+	    border: 2px solid #99cc99;
+	    border-radius: 5px;
+	    font-weight: 600;
+	    font-size: 1em;
+	}
+
+	select:hover{
+		background-color: #99cc99;
+
+	}
+
+	select{
+		display: block;
+	    margin: .5em auto;
+	    height: auto;
+	    border: 2px solid #99cc99;
+	    border-radius: 5px;
+	    font-weight: 600;
+	    font-size: 1em;
+	}
 
 /* The Modal (background) */
 .modal {

@@ -102,7 +102,7 @@ if(empezado){
 }
 
 function dragdrop(){
-	if(empezado){
+	if(!empezado){
     console.log("entro");
 		//DRAG&DROP
 	  let cv01 = document.querySelector('#cv01');
